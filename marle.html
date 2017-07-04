@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超级马里奥-canvas 行走</title>
+</head>
+<body style="text-align:center">
+<canvas id="demo" width="800"
+height="400" style="border:1px solid blue;"
+ margin: 0 auto >
+ 您的浏览器不支持canvas
+ </canvas>
+ <script>
+  //  页面加载完成，js在此时执行
+  // 标志着页面全部加载完成，着手js交互
+  // 时间是异步的，非立即执行，钩子，当预定义事件发生
+  // 回调函数被执行
+// 事件的监听 在主线程挂了钩子，不是现在执行，而是在
+// 事件发生后，异步。从线程里取出钩子。执行约定的函数
+// js是一门事件驱动型语言
+// 柱塞页面的下载。
+// function playAction(direction){
+ // }
+/*   window.onload = function() {
+         var canvas = document.querySelector('#demo');
+         console.log(canvas);
+         // 任务一：按键事件
+         document.addEventListener('keydown',
+       function(e){
+         console.log(e);
+         //  事件对象，回调函数的第一个参数
+         // 提供了
+         var keyCode=e.keyCode;
+         console.log(keyCode);
+         var direction; //underfined null
+         switch(keyCode){
+           case 37:
+               direction='left';
+           case 38:
+               direction='up';
+           case 39:
+               direction='right';
+           case 40:
+               direction='down';
+           break;
+         }
+          console.log(direction);
+       });
+
+     }
+*/
+  function getDirection (e) {
+    var keyCode = e.keyCode;
+    var direction;  //undefined  null
+    switch(keyCode) {
+        case 37:
+            direction = 'left';
+        break;
+        case 38:
+            direction = 'up';
+        break;
+        case 39:
+            direction = 'right';
+        break;
+        case 40:
+            direction = 'down'
+        break;
+    }
+    return direction;
+}
+function playAction(direction) {
+  var posX=0;
+  if(direction==='rigth'){
+    // 向前走 player.x + 步骤
+    posX=player.x + player.width;
+    playerMove();
+  }
+
+}
+window.onload = function() {
+    var canvas = document.querySelector('#demo');
+    var context=canvas.getContext('2d');
+    var mario=new Image();
+    mario.src="http://static.blueidea.com/attachment/forum/201207/03/180652md4ydy2txwotdd7l.png"
+    mario.onload=function(){
+      drawMario();
+    }
+    // 用json来做配置
+    var player={
+      // 大小
+      width:50,
+      heigth:60,
+      // 坐标
+      x:50,
+      y:0,
+      // 剪裁图片开始的位置
+      imageX:0,
+      imageY:0
+    }
+    function  drawMario(){
+      context.drawImage(mario,player.imageX,
+        player.imageY,player.width,player.heigth,
+      player.x,canvas.heigth-player.heigth,
+    player.width,player.heigth);
+    }
+    console.log(canvas);
+    // 任务一按键事件
+    document.addEventListener('keydown',
+     function (e) {
+        // 事件对象，回调函数的第一个参数
+        // 提供了解决事件的细节
+        // 事件对象在触发事件的瞬间产生
+        // console.log(e)
+        var direction = getDirection(e);
+        playAction(direction);
+     })
+
+}
+
+ </script>
+</body>
+</html>
